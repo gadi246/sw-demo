@@ -73,34 +73,7 @@ self.addEventListener('fetch', function(e) {
 				}
 
 				// If the request is NOT in the cache, fetch and cache
-
-				var requestClone = e.request.clone();
-				fetch(requestClone)
-					.then(function(response) {
-
-						if ( !response ) {
-							console.log("[ServiceWorker] No response from fetch ")
-							return response;
-						}
-
-						var responseClone = response.clone();
-
-						//  Open the cache
-						caches.open(cacheName).then(function(cache) {
-
-							// Put the fetched response in the cache
-							cache.put(e.request, responseClone);
-							console.log('[ServiceWorker] New Data Cached', e.request.url);
-
-							// Return the response
-							return response;
-			
-				        }); // end caches.open
-
-					})
-					.catch(function(err) {
-						console.log('[ServiceWorker] Error Fetching & Caching New Data', err);
-					});
+				return fetch(e.request);
 
 
 			}) // end caches.match(e.request)
