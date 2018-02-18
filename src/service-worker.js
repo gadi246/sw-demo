@@ -74,6 +74,11 @@ self.addEventListener('fetch', function(e) {
 
 				// If the request is NOT in the cache, fetch and cache
 
+        // IMPORTANT: Clone the response. A response is a stream
+        // and because we want the browser to consume the response
+        // as well as the cache consuming the response, we need
+        // to clone it so we have two streams.
+
 				var requestClone = e.request.clone();
 				fetch(requestClone)
 					.then(function(response) {
